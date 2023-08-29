@@ -6,6 +6,7 @@ export default class Ship {
 
     hit(){
         this.hits += 1
+        return this.isSunk() ? 'Sunked' : 'Hit'
     }
 
     isSunk() {
