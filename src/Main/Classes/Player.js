@@ -8,7 +8,7 @@ export default class Player {
 	}
 
 	attack(row, column, enemyBoard) {
-		return enemyBoard.receivedAttack(row, column);
+		return enemyBoard.receiveAttack(row, column);
 	}
 
 	randomAttack(enemyBoard) {
@@ -20,7 +20,6 @@ export default class Player {
 		) {
 			return this.randomAttack(enemyBoard);
 		} else {
-			console.table(enemyBoard.board)
 			return attacked;
 		}
 	}
@@ -44,4 +43,5 @@ export default class Player {
 			}
 		}
 	}
+
 }

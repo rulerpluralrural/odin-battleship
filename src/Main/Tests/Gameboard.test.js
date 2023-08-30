@@ -1,6 +1,5 @@
-import Gameboard from "../Gameboard.js";
-import Player from "../Player.js";
-import Ship from "../Ship.js";
+import Gameboard from "../Classes/Gameboard.js";
+import Ship from "../Classes/Ship.js";
 
 describe("Gameboard", () => {
 	let testShip;
@@ -76,15 +75,7 @@ describe("Gameboard", () => {
 
     it('check for missed shots', () => {
         testBoard.placeShip(testShip, 3, 3, true);
-        console.table(testBoard.board)
         expect(testBoard.receiveAttack(3, 4)).toBe('Missed')
     })
 
-	const player = new Player('Player')
-	const enemyBoard = new Gameboard()
-	const newShip = new Ship(10)
-	for (let i = 0; i < 10; i++) {
-		enemyBoard.placeShip(newShip, i, 0, false)
-	}
-	console.log(player.randomAttack(enemyBoard))
 });
