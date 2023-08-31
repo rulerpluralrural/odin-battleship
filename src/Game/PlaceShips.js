@@ -15,7 +15,7 @@ function startMenu() {
 	const startGameModal = document.createElement("div");
 	startGameModal.className = "overlay";
 	startGameModal.id = "overlay";
-	let isVertical = false;
+	let isVertical = true;
 
 	startGameModal.innerHTML += `
         <div class="modal">
@@ -46,79 +46,50 @@ function startMenu() {
 		square.setAttribute("data-x", `${i % 10}`);
 		square.setAttribute("data-y", `${Math.floor(i / 10)}`);
 		const introBoard = startGameModal.querySelector("#place-ship-board");
+		introBoard.insertAdjacentElement("beforeend", square);
+
 		square.addEventListener("mouseover", function () {
-			activeSquare.call(this, isVertical, introBoard, currentShip);
+			activeSquare.call(this, isVertical, introBoard, currentShip, function(targetCell) {
+				targetCell.classList.add('active-cell')
+			});
 		});
         square.addEventListener('mouseout', function() {
-            removeActiveSquare.call(this, isVertical, introBoard, currentShip)
+            activeSquare.call(this, isVertical, introBoard, currentShip, function(targetCell) {
+				targetCell.classList.remove('active-cell')
+			})
         })
-		introBoard.insertAdjacentElement("beforeend", square);
+		square.addEventListener('click', function() {
+            setShips.call(this, isVertical, introBoard, currentShip)
+        })
 	}
 
 	return root.appendChild(startGameModal);
 }
 
-function activeSquare(isVertical, introBoard, currentShip) {
-	// console.log(introBoard)
+function activeSquare(isVertical, introBoard, currentShip, cellCallback) {
 	const x = parseInt(this.dataset.x);
 	const y = parseInt(this.dataset.y);
 
 	if (isVertical) {
 		for (let i = 0; i < currentShip.length; i++) {
 			if (y + i < 10) {
-				const targetCell = introBoard.children[y * 10 + i * 10 + x];
-                console.log(targetCell);
-                targetCell.classList.add('current-cell')
-				
+				const index = y * 10 + x
+				const targetCell = introBoard.children[index + i * 10];
+				cellCallback(targetCell)
 			}
 		}
 	} else {
 		for (let i = 0; i < currentShip.length; i++) {
 			if (x + i < 10) {
 				const targetCell = introBoard.children[y * 10 + x + i];
-                console.log(targetCell);
-                targetCell.classList.add('current-cell')
-				
+				cellCallback(targetCell)
 			}
 		}
 	}
 }
 
-function removeActiveSquare(isVertical, introBoard, currentShip) {
-    const x = parseInt(this.dataset.x);
-	const y = parseInt(this.dataset.y);
-
-	if (isVertical) {
-		for (let i = 0; i < currentShip.length; i++) {
-			if (y + i < 10) {
-				const targetCell = introBoard.children[y * 10 + i * 10 + x];
-                console.log(targetCell);
-                targetCell.classList.remove('current-cell')
-				
-			}
-		}
-	} else {
-		for (let i = 0; i < currentShip.length; i++) {
-			if (x + i < 10) {
-				const targetCell = introBoard.children[y * 10 + x + i];
-                console.log(targetCell);
-                targetCell.classList.remove('current-cell')
-				
-			}
-		}
-	}
-}
-
-function setShips() {
-	const currentShip = 0;
-	const setShip = 0;
-
-	const shipNameText = document.querySelector("#modal-header");
-	const randomButton = document.querySelector("#random-btn");
-	const changeOrientationButton = document.querySelector(
-		"#change-orientation-btn"
-	);
-	const resetButton = document.querySelector("#reset-btn");
+function setShips(isVertical, introBoard, currentShip) {
+	
 }
 
 export { startMenu };
