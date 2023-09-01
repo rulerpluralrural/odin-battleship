@@ -9,6 +9,9 @@
 
 :root {
 	--black-opq: rgba(50, 50, 66, 0.8);
+	--green-opq: rgba(79, 220, 74, 0.8);
+	--dark-green-opq: rgba(49, 134, 46, 0.8);
+	--red-opq: rgba(255, 38, 38, 0.8);
 	--dark-font: #202025;
 	--dark-blue: #1b1b29;
 	--white-font: #fcdec3;
@@ -26,6 +29,26 @@
 
 body {
 	height: 100vh;
+}
+
+button {
+	background-color: var(--dark-blue);
+	color: var(--white-font);
+	border-radius: 5px;
+	padding: 0.5rem;
+    width: 150px;
+	cursor: pointer;
+	align-self: center;
+	font-family: var(--font-normal);
+	font-size: 2rem;
+	font-weight: 700;
+	transition: background-color 150ms ease-in;
+	border: none;
+}
+
+button:hover,
+button:focus {
+	background-color: #27273b;
 }
 
 .overlay {
@@ -68,22 +91,8 @@ body {
 	color: var(--red-clr);
 }
 
-.modal-btn-container button {
-	background-color: var(--dark-blue);
-	color: var(--white-font);
-	border-radius: 5px;
-	padding: 0.5rem;
-    width: 150px;
-	cursor: pointer;
-	align-self: center;
-	font-family: var(--font-normal);
-	font-size: 2rem;
-	font-weight: 700;
-	transition: background-color 150ms ease-in;
-}
-
 .modal-btn-container button:focus {
-    outline: 1px solid  var(--dark-blue);
+    outline: 2px solid  var(--dark-blue);
 }
 
 .modal-btn-container .random-btn {
@@ -121,11 +130,6 @@ body {
     );
 }
 
-.modal-btn-container .change-orientation-btn:hover,
-.modal-btn-container .change-orientation-btn:focus {
-	background-color: #27273b;
-}
-
 .modal-btn-container .reset-btn {
     background-color: var(--red-clr);
 }
@@ -143,18 +147,26 @@ body {
 	border-left: 1px solid var(--dark-blue);
 }
 
+.play-btn {
+	margin-top: 1rem;
+}
+
 .square {
 	padding: 25px;
 	border-bottom: 1px solid var(--dark-blue);
 	border-right: 1px solid var(--dark-blue);
     transition: background-color 150ms ease;
+	cursor: crosshair;
 }
 
-.squares:hover {
-    cursor: crosshair;
-    background-color: var(--dark-blue);
+.occupied-cell {
+	background-color: var(--dark-green-opq);
 }
 
-.current-cell {
-    background-color: var(--black-opq);
+.active-cell {
+    background-color: var(--green-opq);
+}
+
+.invalid-cell {
+	background-color: var(--red-opq);
 }

@@ -1,10 +1,10 @@
 import Gameboard from "./Gameboard.js";
 
 export default class Player {
-	constructor(name) {
+	constructor(name, ships = []) {
 		this.name = name;
 		this.playerBoard = new Gameboard();
-		this.ships = [];
+		this.ships = ships;
 	}
 
 	attack(row, column, enemyBoard) {
@@ -14,10 +14,8 @@ export default class Player {
 	randomAttack(enemyBoard) {
 		const randomRow = Math.floor(Math.random() * 10);
 		const randomColumn = Math.floor(Math.random() * 10);
-		const attacked = enemyBoard.receiveAttack(randomRow, randomColumn)
-		if (
-			attacked == "Already Attacked"
-		) {
+		const attacked = enemyBoard.receiveAttack(randomRow, randomColumn);
+		if (attacked == "Already Attacked") {
 			return this.randomAttack(enemyBoard);
 		} else {
 			return attacked;
@@ -43,5 +41,4 @@ export default class Player {
 			}
 		}
 	}
-
 }

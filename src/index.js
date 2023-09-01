@@ -1,5 +1,5 @@
 import Gameboard from "./Main/Classes/Gameboard.js";
-import { startMenu } from "./Game/PlaceShips.js";
+import { startMenu } from "./Game/Modal.js";
 import "./index.css";
 
 // const gameboard = new Gameboard()
