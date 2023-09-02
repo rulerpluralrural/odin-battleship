@@ -1,4 +1,5 @@
 import Game from "../Main/Classes/GameController.js";
+import BoardController from "../Main/Classes/BoardController.js";
 
 function startMenu() {
 	const root = document.querySelector("#root");
@@ -40,6 +41,8 @@ function startMenu() {
 	randomShipsButton.addEventListener("click", () => {
 		placeRandomShips(introBoard);
 	});
+
+	playGameButton.addEventListener("click", startGame);
 
 	for (let i = 0; i < 10 * 10; i++) {
 		const square = document.createElement("div");
@@ -165,18 +168,41 @@ function placeRandomShips(introBoard) {
 	const playerBoard = Game.player.playerBoard.board;
 	resetBoard();
 	Game.player.placeRandomShips();
-	Game.shipIndex = Game.player.ships.length
-	changeShipName()
+	Game.shipIndex = Game.player.ships.length;
+	changeShipName();
 
 	for (let y = 0; y < playerBoard.length; y++) {
 		for (let x = 0; x < playerBoard.length; x++) {
 			if (playerBoard[y][x]) {
-				const targetCell = introBoard.querySelector(`[data-x='${x}'][data-y='${y}']`);
-				targetCell.classList.add('occupied-cell')
+				const targetCell = introBoard.querySelector(
+					`[data-x='${x}'][data-y='${y}']`
+				);
+				targetCell.classList.add("occupied-cell");
 			}
 		}
 	}
-	console.table(Game.player.playerBoard.board);
+	// console.table(Game.player.playerBoard.board);
+}
+
+function startGame() {
+	const modal = document.querySelector("#overlay");
+
+	if (Game.shipIndex < Game.player.ships.length) return;
+
+	modal.classList.add("hide-modal");
+	
+	const playerBoard = document.querySelector('#player-board')
+	const enemyBoard = document.querySelector('#enemy-board')
+	
+	const playerOne = new BoardController(Game.player, playerBoard)
+	const playerTwo = new BoardController(Game.AI, enemyBoard)
+
+	Game.setUpGame(
+		playerOne,
+		playerTwo
+	)
+
+	// console.table(Game.player.playerBoard.board);
 }
 
 export { startMenu };

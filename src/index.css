@@ -15,8 +15,8 @@
 	--dark-font: #202025;
 	--dark-blue: #1b1b29;
 	--white-font: #fcdec3;
-	--light-bg: #fde4d1;
-    --light-gray: #838385;
+	--light-bg: #e1fae1;
+    --light-gray: #b3b3b4;
 	--red-clr: rgb(202, 16, 16);
 	--font-bOps: "Black Ops One", cursive;
 	--font-normal: "Amatic SC", cursive;
@@ -50,6 +50,10 @@ button:hover,
 button:focus {
 	background-color: #27273b;
 }
+
+/***********************/
+/* Start Menu Styling */
+/**********************/
 
 .overlay {
 	position: fixed;
@@ -143,8 +147,8 @@ button:focus {
 	margin-top: 1.5rem;
 	display: grid;
 	grid-template-columns: repeat(10, minmax(50px, 1fr));
-	border-top: 1px solid var(--dark-blue);
-	border-left: 1px solid var(--dark-blue);
+	border-top: 2px solid var(--dark-blue);
+	border-left: 2px solid var(--dark-blue);
 }
 
 .play-btn {
@@ -153,8 +157,8 @@ button:focus {
 
 .square {
 	padding: 25px;
-	border-bottom: 1px solid var(--dark-blue);
-	border-right: 1px solid var(--dark-blue);
+	border-bottom: 2px solid var(--dark-blue);
+	border-right: 2px solid var(--dark-blue);
     transition: background-color 150ms ease;
 	cursor: crosshair;
 }
@@ -169,4 +173,71 @@ button:focus {
 
 .invalid-cell {
 	background-color: var(--red-opq);
+}
+
+
+.hide-modal {
+	opacity: 0;
+	pointer-events: none;
+}
+
+.disable-pointer-events {
+	pointer-events: none;
+}
+
+.hover-bg:hover {
+	background-color: var(--light-gray);
+}
+
+/***********************/
+/* GameBoards Styling */
+/**********************/
+
+.game-container {
+	height: 100vh;
+	overflow-y	: scroll;
+	background-color: var(--light-bg);
+	color: var(--dark-blue);
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+}
+
+.game-header-container .game-title {
+	padding: 1rem;
+	font-family: var(--font-bOps);
+	font-size: 4.5rem;
+}
+
+.game-board-container {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+}
+
+.display-turn {
+	font-family: var(--font-bOps);
+	font-size: 2rem;
+}
+
+@media only screen and (max-width: 1080px ) {
+	.game-container {
+		height: auto;
+	}
+	.game-board-container {
+		flex-direction: column;
+	}
+}
+
+.player-board,
+.enemy-board {
+	margin-top: 1.5rem;
+	display: grid;
+	grid-template-columns: repeat(10, minmax(50px, 1fr));
+	border-top: 2px solid var(--dark-blue);
+	border-left: 2px solid var(--dark-blue);
 }
