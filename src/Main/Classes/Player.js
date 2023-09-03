@@ -11,15 +11,18 @@ export default class Player {
 		return enemyBoard.receiveAttack(row, column);
 	}
 
-	randomAttack(enemyBoard) {
-		const randomRow = Math.floor(Math.random() * 10);
-		const randomColumn = Math.floor(Math.random() * 10);
+	randomAttack( enemyBoard) {
+		const randomRow = Math.floor(Math.random() * 10)
+		const randomColumn = Math.floor(Math.random() * 10)
+
 		const attacked = enemyBoard.receiveAttack(randomRow, randomColumn);
-		if (attacked == "Already Attacked") {
+
+		if (attacked === "Already Attacked") {
 			return this.randomAttack(enemyBoard);
 		} else {
-			return attacked;
+			return { x :randomRow, y: randomColumn, result: attacked };
 		}
+		
 	}
 
 	placeRandomShips() {
@@ -40,5 +43,9 @@ export default class Player {
 				i += 1;
 			}
 		}
+	}
+
+	checkAllShips() {
+		return this.ships.every(ship => ship.isSunk())
 	}
 }

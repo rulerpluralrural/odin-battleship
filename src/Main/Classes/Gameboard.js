@@ -75,4 +75,5 @@ export default class Gameboard {
 		this.board[row][column] = "X";
 		return ship.hit();
 	}
+
 }

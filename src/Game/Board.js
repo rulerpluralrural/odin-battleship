@@ -40,7 +40,7 @@ function createBoards() {
     return container
 }
 
-function createCell(x, y, currentPlayer) {
+function createCell(x, y, targetCell) {
     const cell = document.createElement('div')
     cell.className = 'square'
     cell.classList.add('hover-bg')
@@ -48,7 +48,7 @@ function createCell(x, y, currentPlayer) {
     cell.setAttribute("data-y", `${y}`);
 
     cell.addEventListener('click', () => {
-        Game.attack(x, y, currentPlayer)
+        Game.attack(x, y, targetCell)
     })
 
     return cell
