@@ -15,6 +15,7 @@
 	--dark-font: #202025;
 	--dark-blue: #1b1b29;
 	--white-font: #fcdec3;
+	--blue-clr: rgb(88, 159, 241) ;
 	--light-bg: #e1fae1;
     --light-gray: #b3b3b4;
 	--red-clr: rgb(202, 16, 16);
@@ -29,6 +30,7 @@
 
 body {
 	height: 100vh;
+	position: relative;	
 }
 
 button {
@@ -68,10 +70,11 @@ button:focus {
 	align-items: center;
 	gap: 1rem;
 	text-align: center;
+	transition: opacity 250ms ease-out;
 }
 
 .modal {
-	width: 550px;
+	width: 570px;
     padding: 2rem;
 	background-color: var(--light-bg);
 	border-radius: 5px;
@@ -169,6 +172,10 @@ button:focus {
 	cursor: crosshair;
 }
 
+.empty-cell {
+	background-color: var(--white-font);
+}
+
 .occupied-cell {
 	background-color: var(--dark-green-opq);
 }
@@ -182,7 +189,7 @@ button:focus {
 }
 
 .missed {
-	background-color: var(--light-gray);
+	background-color: var(--blue-clr);
 }
 
 .sunked {
@@ -253,4 +260,49 @@ button:focus {
 	grid-template-columns: repeat(10, minmax(50px, 1fr));
 	border-top: 2px solid var(--dark-blue);
 	border-left: 2px solid var(--dark-blue);
+}
+
+/***************************/
+/* End Game Modal Styling */
+/**************************/
+
+.end-game-modal-overlay {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	font-family: var(--font-normal);
+	background-color: var(--black-opq);
+	transition: opacity 200ms ease-in;
+}
+
+.end-game-modal {
+	height: 300px;
+	width: 300px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+	flex-direction: column;
+	background-color: var(--light-bg);
+	border-radius: 5px;
+}
+
+.end-game-modal h1 {
+	font-size: 3.5rem;
+	font-weight: bold;
+}
+
+.end-game-modal h2 {
+	font-size: 2.3rem;
+}
+
+.end-game-modal span {
+	color: var(--red-clr);
+}
+
+.end-game-modal button {
+	color: var(--white-font);
 }

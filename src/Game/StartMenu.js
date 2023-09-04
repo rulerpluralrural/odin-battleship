@@ -52,7 +52,7 @@ function startMenu() {
 		introBoard.insertAdjacentElement("beforeend", square);
 
 		square.addEventListener("mouseover", function () {
-			if (Game.shipIndex > Game.player.ships.length - 1) return;
+			if (Game.shipIndex > Game.user.ships.length - 1) return;
 			activeSquare.call(this, introBoard, function (targetCell) {
 				if (targetCell.classList.contains("occupied-cell")) {
 					targetCell.classList.add("invalid-cell");
@@ -62,7 +62,7 @@ function startMenu() {
 			});
 		});
 		square.addEventListener("mouseout", function () {
-			if (Game.shipIndex > Game.player.ships.length - 1) return;
+			if (Game.shipIndex > Game.user.ships.length - 1) return;
 			activeSquare.call(this, introBoard, function (targetCell) {
 				if (targetCell.classList.contains("active-cell")) {
 					targetCell.classList.remove("active-cell");
@@ -73,7 +73,7 @@ function startMenu() {
 			});
 		});
 		square.addEventListener("click", function () {
-			if (Game.shipIndex > Game.player.ships.length - 1) return;
+			if (Game.shipIndex > Game.user.ships.length - 1) return;
 			setUpShips.call(this, introBoard);
 		});
 	}
@@ -84,9 +84,9 @@ function startMenu() {
 function changeShipName() {
 	const shipName = document.querySelector("#modal-header");
 
-	if (Game.shipIndex < Game.player.ships.length) {
+	if (Game.shipIndex < Game.user.ships.length) {
 		shipName.innerHTML = `Place Your <span>${
-			Game.player.ships[Game.shipIndex].name
+			Game.user.ships[Game.shipIndex].name
 		}!</span>`;
 	} else {
 		shipName.textContent = `Start the Game!`;
@@ -98,7 +98,7 @@ function activeSquare(introBoard, cellCallback) {
 	const y = parseInt(this.dataset.y);
 
 	if (Game.isVertical) {
-		for (let i = 0; i < Game.player.ships[Game.shipIndex].length; i++) {
+		for (let i = 0; i < Game.user.ships[Game.shipIndex].length; i++) {
 			if (y + i < 10) {
 				const index = y * 10 + x;
 				const targetCell = introBoard.children[index + i * 10];
@@ -106,7 +106,7 @@ function activeSquare(introBoard, cellCallback) {
 			}
 		}
 	} else {
-		for (let i = 0; i < Game.player.ships[Game.shipIndex].length; i++) {
+		for (let i = 0; i < Game.user.ships[Game.shipIndex].length; i++) {
 			if (x + i < 10) {
 				const targetCell = introBoard.children[y * 10 + x + i];
 				cellCallback(targetCell);
@@ -120,15 +120,15 @@ function setUpShips(introBoard) {
 	const y = parseInt(this.dataset.y);
 
 	if (
-		Game.player.playerBoard.placeShip(
-			Game.player.ships[Game.shipIndex],
+		Game.user.playerBoard.placeShip(
+			Game.user.ships[Game.shipIndex],
 			y,
 			x,
 			Game.isVertical
 		)
 	) {
 		if (Game.isVertical) {
-			for (let i = 0; i < Game.player.ships[Game.shipIndex].length; i++) {
+			for (let i = 0; i < Game.user.ships[Game.shipIndex].length; i++) {
 				if (y + i < 10) {
 					const index = y * 10 + x;
 					const targetCell = introBoard.children[index + i * 10];
@@ -136,7 +136,7 @@ function setUpShips(introBoard) {
 				}
 			}
 		} else {
-			for (let i = 0; i < Game.player.ships[Game.shipIndex].length; i++) {
+			for (let i = 0; i < Game.user.ships[Game.shipIndex].length; i++) {
 				if (x + i < 10) {
 					const targetCell = introBoard.children[y * 10 + x + i];
 					targetCell.classList.add("occupied-cell");
@@ -153,7 +153,7 @@ function setUpShips(introBoard) {
 
 function resetBoard() {
 	const squares = document.querySelectorAll("#place-ship-board div");
-	Game.player.playerBoard.init();
+	Game.user.playerBoard.init();
 	Game.shipIndex = 0;
 	changeShipName();
 
@@ -165,10 +165,10 @@ function resetBoard() {
 }
 
 function placeRandomShips(introBoard) {
-	const playerBoard = Game.player.playerBoard.board;
+	const playerBoard = Game.user.playerBoard.board;
 	resetBoard();
-	Game.player.placeRandomShips();
-	Game.shipIndex = Game.player.ships.length;
+	Game.user.placeRandomShips();
+	Game.shipIndex = Game.user.ships.length;
 	changeShipName();
 
 	for (let y = 0; y < playerBoard.length; y++) {
@@ -186,23 +186,26 @@ function placeRandomShips(introBoard) {
 
 function startGame() {
 	const modal = document.querySelector("#overlay");
+	const turnDisplay = document.querySelector('#display-turn')
 
-	if (Game.shipIndex < Game.player.ships.length) return;
+	if (Game.shipIndex < Game.user.ships.length) return;
 
 	modal.classList.add("hide-modal");
 	
 	const playerBoard = document.querySelector('#player-board')
 	const enemyBoard = document.querySelector('#enemy-board')
 	
-	const playerOne = new BoardController(Game.player, playerBoard)
+	const playerOne = new BoardController(Game.user, playerBoard)
 	const playerTwo = new BoardController(Game.AI, enemyBoard)
 
 	Game.setUpGame(
 		playerOne,
-		playerTwo
+		playerTwo,
+		turnDisplay
 	)
 
-	// console.table(Game.player.playerBoard.board);
+	// console.table(playerOne.player.playerBoard.board);
+	// console.table(playerTwo.player.playerBoard.board)
 }
 
 export { startMenu };

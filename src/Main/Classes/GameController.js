@@ -1,9 +1,10 @@
 import BoardController from "./BoardController";
 import Player from "./Player";
 import Ship from "./Ship";
+import { overlay, winnerText } from "../../Game/EndGameModal";
 
 export default class Game {
-	static player = new Player("Player", [
+	static user = new Player("Player", [
 		new Ship(5, "Carrier"),
 		new Ship(4, "Battleship"),
 		new Ship(3, "Destroyer"),
@@ -28,11 +29,13 @@ export default class Game {
 	static controller2;
 	/**@type {BoardController} */
 	static current;
+	static turnDisplay;
 
-	static setUpGame(controller1, controller2) {
+	static setUpGame(controller1, controller2, turnDisplay) {
 		this.controller1 = controller1;
 		this.controller2 = controller2;
 		this.current = controller1;
+		this.turnDisplay = turnDisplay
 
 		this.AI.placeRandomShips();
 		controller1.showBoardShips();
@@ -40,23 +43,28 @@ export default class Game {
 	}
 
 	static changeTurn() {
-		const prev = this.current;
+		const other = this.current;
 		const current =
 			this.current === this.controller1 ? this.controller2 : this.controller1;
-
+		
 		if (current.player.name === "AI") {
-			prev.disableBoard();
+			other.disableBoard();
 		} else {
-			prev.enableBoard();
+			other.enableBoard()
 		}
 
 		this.current = current;
 		current.disableBoard();
-		prev.enableBoard();
 
 		if (current.player.name === "AI") {
-			this.handleAIAttack();
+			this.turnDisplay.textContent = 'It\'s the enemy\'s turn!'
+			setTimeout(() => {
+				this.handleAIAttack()
+			}, 500);
+		} else {
+			this.turnDisplay.textContent = 'It\'s your turn!'
 		}
+			
 	}
 
 	static handleAIAttack() {
@@ -67,7 +75,10 @@ export default class Game {
 		const aiAttackResult = current.player.randomAttack(targetBoard);
 		const targetX = aiAttackResult.x
 		const targetY = aiAttackResult.y
-		this.attack(targetX, targetY, target.boardView, aiAttackResult.result)
+		this.attack(targetY, targetX, target.boardView, aiAttackResult.result)		
+
+		// console.log(aiAttackResult.result)
+		// console.table(target.player.playerBoard.board)
 		
 		if (
 			aiAttackResult.result === "Hit" ||
@@ -76,7 +87,6 @@ export default class Game {
 		) {
 			this.handleAIAttack()
 		}
-		
 	}
 
 	static attack(x, y, targetBoard, result) {
@@ -101,7 +111,7 @@ export default class Game {
 			targetCell.classList.add("missed");
 			targetCell.textContent = "~";
 			this.changeTurn();
-		} else if (attackResult === "Hit" || "Sunked") {
+		} else {
 			targetCell.classList.add("invalid-cell");
 			targetCell.textContent = "+";
 		}
@@ -115,6 +125,16 @@ export default class Game {
 
 	static gameIsOver() {
 		this.isGameOver = true;
-		console.log("game over");
+		overlay.classList.remove('hide-modal')
+		winnerText.innerHTML =`
+		Game Winner: 
+		<span>${this.current.player.name}</span>
+		`;
+	}
+
+	static restartGame() {
+		this.isGameOver = true
+		overlay.classList.add('hide-modal')
+		window.location.reload()
 	}
 }
