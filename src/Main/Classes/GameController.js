@@ -1,5 +1,5 @@
 import BoardController from "./BoardController";
-import Player from "./Player";
+import Player, { AI } from "./Player";
 import Ship from "./Ship";
 import { overlay, winnerText } from "../../Game/EndGameModal";
 
@@ -12,7 +12,7 @@ export default class Game {
 		new Ship(2, "Patrol Boat"),
 	]);
 
-	static AI = new Player("AI", [
+	static ai = new AI("AI", [
 		new Ship(5, "Carrier"),
 		new Ship(4, "Battleship"),
 		new Ship(3, "Destroyer"),
@@ -37,7 +37,6 @@ export default class Game {
 		this.current = controller1;
 		this.turnDisplay = turnDisplay
 
-		this.AI.placeRandomShips();
 		controller1.showBoardShips();
 		controller1.disableBoard();
 	}
@@ -72,7 +71,7 @@ export default class Game {
 		const target =
 			this.current === this.controller1 ? this.controller2 : this.controller1;
 		const targetBoard = target.player.playerBoard
-		const aiAttackResult = current.player.randomAttack(targetBoard);
+		const aiAttackResult = /** @type { AI }*/ (current.player).smartRandomAttack(targetBoard);
 		const targetX = aiAttackResult.x
 		const targetY = aiAttackResult.y
 		this.attack(targetY, targetX, target.boardView, aiAttackResult.result)		
@@ -89,31 +88,32 @@ export default class Game {
 		}
 	}
 
-	static attack(x, y, targetBoard, result) {
+	static attack(x, y, targetBoardView, result) {
 		if (this.isGameOver) return;
 
 		const target =
 			this.current === this.controller1 ? this.controller2 : this.controller1;
-		const targetCell = targetBoard.querySelector(
+		const targetCell = targetBoardView.querySelector(
 			`[data-x="${x}"][data-y="${y}"]`
 		)
+		const targetBoard = target.player.playerBoard
 		let attackResult;
 		
 		if (result) {
 			attackResult = result
 		} else {
-			attackResult = target.player.playerBoard.receiveAttack(y, x)
+			attackResult = targetBoard.receiveAttack(y, x)
 		}
 
 		if (attackResult === "Already Attacked") return;
 
 		if (attackResult === "Missed") {
 			targetCell.classList.add("missed");
-			targetCell.textContent = "~";
+			targetCell.textContent = "·";
 			this.changeTurn();
 		} else {
 			targetCell.classList.add("invalid-cell");
-			targetCell.textContent = "+";
+			targetCell.textContent = "x";
 		}
 
 		if (target.player.checkAllShips()) {

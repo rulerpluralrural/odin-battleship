@@ -9,28 +9,30 @@
 
 :root {
 	--black-opq: rgba(50, 50, 66, 0.8);
-	--green-opq: rgba(79, 220, 74, 0.8);
-	--dark-green-opq: rgba(49, 134, 46, 0.8);
+	--green-opq: rgba(53, 231, 46, 0.8);
+	--dark-gray: rgb(134, 134, 134);
+	--dark-green-opq: rgba(6, 90, 2, 0.9);
 	--red-opq: rgba(255, 38, 38, 0.8);
 	--dark-font: #202025;
 	--dark-blue: #1b1b29;
 	--white-font: #fcdec3;
-	--blue-clr: rgb(88, 159, 241) ;
+	--blue-clr: rgb(88, 159, 241);
 	--light-bg: #e1fae1;
-    --light-gray: #b3b3b4;
+	--light-gray: #b3b3b4;
 	--red-clr: rgb(202, 16, 16);
 	--font-bOps: "Black Ops One", cursive;
 	--font-normal: "Amatic SC", cursive;
+	--font-su: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
 *::selection {
-    background-color: var(--light-gray);
+	background-color: var(--light-gray);
 }
-
 
 body {
 	height: 100vh;
-	position: relative;	
+	position: relative;
 }
 
 button {
@@ -38,7 +40,7 @@ button {
 	color: var(--white-font);
 	border-radius: 5px;
 	padding: 0.5rem;
-    width: 150px;
+	width: 150px;
 	cursor: pointer;
 	align-self: center;
 	font-family: var(--font-normal);
@@ -50,7 +52,7 @@ button {
 
 button:hover,
 button:focus {
-	background-color: #27273b;
+	background-color: #323242;
 }
 
 /***********************/
@@ -75,7 +77,7 @@ button:focus {
 
 .modal {
 	width: 570px;
-    padding: 2rem;
+	padding: 2rem;
 	background-color: var(--light-bg);
 	border-radius: 5px;
 }
@@ -99,51 +101,25 @@ button:focus {
 }
 
 .modal-btn-container button:focus {
-    outline: 2px solid  var(--dark-blue);
+	outline: 2px solid var(--dark-blue);
 }
 
 .modal-btn-container .random-btn {
-    background: linear-gradient(
-        90deg,
-        rgba(255, 0, 0, 1) 0%,
-        rgba(255, 154, 0, 1) 10%,
-        rgba(208, 222, 33, 1) 20%,
-        rgba(79, 220, 74, 1) 30%,
-        rgba(63, 218, 216, 1) 40%,
-        rgba(47, 201, 226, 1) 50%,
-        rgba(28, 127, 238, 1) 60%,
-        rgba(95, 21, 242, 1) 70%,
-        rgba(186, 12, 248, 1) 80%,
-        rgba(251, 7, 217, 1) 90%,
-        rgba(255, 0, 0, 1) 100%
-    );
+	background-color: var(--dark-blue);
 }
 
 .modal-btn-container .random-btn:hover,
 .modal-btn-container .random-btn:focus {
-    background: linear-gradient(
-        270deg,
-        rgba(255, 0, 0, 1) 0%,
-        rgba(255, 154, 0, 1) 10%,
-        rgba(208, 222, 33, 1) 20%,
-        rgba(79, 220, 74, 1) 30%,
-        rgba(63, 218, 216, 1) 40%,
-        rgba(47, 201, 226, 1) 50%,
-        rgba(28, 127, 238, 1) 60%,
-        rgba(95, 21, 242, 1) 70%,
-        rgba(186, 12, 248, 1) 80%,
-        rgba(251, 7, 217, 1) 90%,
-        rgba(255, 0, 0, 1) 100%
-    );
+	background-color: #323242;
 }
 
 .modal-btn-container .reset-btn {
-    background-color: var(--red-clr);
+	background-color: var(--red-clr);
 }
 
 .modal-btn-container .reset-btn:hover,
 .modal-btn-container .reset-btn:focus {
-    background-color: rgb(230, 21, 21);
+	background-color: rgb(230, 21, 21);
 }
 
 .place-ship-board {
@@ -156,19 +132,26 @@ button:focus {
 
 .play-btn {
 	margin-top: 1rem;
+	background-color: var(--dark-green-opq);
+}
+
+.play-btn:hover,
+.play-btn:focus {
+	background-color: var(--green-opq);
 }
 
 .square {
 	height: 50px;
 	width: 50px;
 	font-size: 2rem;
+	font-family: var(--font-su);
 	font-weight: bold;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	border-bottom: 2px solid var(--dark-blue);
 	border-right: 2px solid var(--dark-blue);
-    transition: background-color 150ms ease;
+	transition: background-color 150ms ease;
 	cursor: crosshair;
 }
 
@@ -177,11 +160,11 @@ button:focus {
 }
 
 .occupied-cell {
-	background-color: var(--dark-green-opq);
+	background-color: var(--dark-gray);
 }
 
 .active-cell {
-    background-color: var(--green-opq);
+	background-color: var(--green-opq);
 }
 
 .invalid-cell {
@@ -215,7 +198,7 @@ button:focus {
 
 .game-container {
 	height: 100vh;
-	overflow-y	: scroll;
+	overflow-y: scroll;
 	background-color: var(--light-bg);
 	color: var(--dark-blue);
 	text-align: center;
@@ -244,7 +227,7 @@ button:focus {
 	font-size: 2rem;
 }
 
-@media only screen and (max-width: 1080px ) {
+@media (max-width: 1080px) {
 	.game-container {
 		height: auto;
 	}

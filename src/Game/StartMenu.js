@@ -196,7 +196,7 @@ function startGame() {
 	const enemyBoard = document.querySelector('#enemy-board')
 	
 	const playerOne = new BoardController(Game.user, playerBoard)
-	const playerTwo = new BoardController(Game.AI, enemyBoard)
+	const playerTwo = new BoardController(Game.ai, enemyBoard)
 
 	Game.setUpGame(
 		playerOne,
